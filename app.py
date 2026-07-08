@@ -1,39 +1,22 @@
-# HYGIENE_UPAC_CURIE_IA
 import streamlit as st
-import datetime
-from PIL import Image
 
-st.set_page_config(page_title="Recensement Pétri", page_icon="🧫")
+# Configuration de la page principale
+st.set_page_config(page_title="Hygène UPAC - IA Curie", page_icon="🧫", layout="wide")
 
-if "historique" not in st.session_state:
-    st.session_state.historique = []
+# Titre Principal du Tableau de bord
+st.title("🧫 Tableau de Bord - Suivi des Prélèvements")
+st.markdown("Bienvenue sur l'application de recensement et d'analyse IA de l'UPAC Curie.")
 
-st.title("🧫 Recensement des Boîtes de Petri")
+st.divider()
 
-col1, col2 = st.columns([1, 1])
+# Chiffres clés (Simulés pour le moment)
+col1, col2, col3, col4 = st.columns(4)
+col1.metric(label="Total Boîtes Recensées", value="0")
+col2.metric(label="Boîtes Positives (24h)", value="0")
+col3.metric(label="Prélèvements aujourd'hui", value="0")
+col4.metric(label="Précision actuelle de l'IA", value="-- %")
 
-with col1:
-    st.header("📸 Scanner une boîte")
-    uploaded_file = st.file_uploader("Glissez une photo ici...", type=["jpg", "jpeg", "png"])
-    
-    if uploaded_file is not None:
-        image = Image.open(uploaded_file)
-        st.image(image, caption="Photo reçue", use_container_width=True)
-        
-        if st.button("Lancer la détection AI 🚀"):
-            nom_boite = f"Boîte-{len(st.session_state.historique) + 1}"
-            date_actuelle = datetime.datetime.now().strftime("%d/%m/%Y à %H:%M")
-            
-            st.session_state.historique.append({
-                "Identifiant": nom_boite,
-                "Date": date_actuelle,
-                "Statut": "Détectée ✅"
-            })
-            st.success(f"{nom_boite} enregistrée !")
+st.divider()
 
-with col2:
-    st.header("📊 Historique")
-    if not st.session_state.historique:
-        st.info("Aucune boîte pour le moment.")
-    else:
-        st.dataframe(st.session_state.historique)
+st.subheader("📋 Derniers prélèvements enregistrés")
+st.info("Utilisez le menu latéral à gauche pour naviguer entre les différentes rubriques de votre application.")
